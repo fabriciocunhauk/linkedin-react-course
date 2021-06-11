@@ -32,3 +32,11 @@ button {
     background-color: #ee2222;
     margin-left: 8px;
 }
+
+.active {
+    text-decoration: line-through;
+}
+
+.normal {
+    text-decoration: none;
+}

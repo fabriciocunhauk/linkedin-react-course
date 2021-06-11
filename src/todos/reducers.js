@@ -1,4 +1,4 @@
-import { CREATE_TODO, REMOVE_TODO } from "./actions";
+import { CREATE_TODO, TODO_COMPLETED, REMOVE_TODO } from "./actions";
 
 export const todos = (state = [], action) => {
     const { type, payload } = action;
@@ -11,6 +11,10 @@ export const todos = (state = [], action) => {
                 isCompleted: false
             };
             return state.concat(newTodo);
+        }
+
+        case TODO_COMPLETED: {
+            return [...state]
         }
 
         case REMOVE_TODO: {
