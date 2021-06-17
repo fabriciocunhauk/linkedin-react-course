@@ -9,9 +9,9 @@ const TodoListItem = ({ todo, onRemovePressed, toggleCompleted }) => {
                 onClick={() => {
                     const active = todo.isCompleted;
                     if (!active) {
-                        toggleCompleted(todo.isCompleted = true)
+                        toggleCompleted(todo.isCompleted = true, todo.id)
                     } else {
-                        toggleCompleted(todo.isCompleted = false)
+                        toggleCompleted(todo.isCompleted = false, todo.id)
                     }
                 }}
                 className="completed-button">Mark As Complete</button>
@@ -21,6 +21,5 @@ const TodoListItem = ({ todo, onRemovePressed, toggleCompleted }) => {
         </div>
     </div>)
 }
-
 
 export default TodoListItem;
