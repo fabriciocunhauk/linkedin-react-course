@@ -4,10 +4,10 @@ export const createTodo = todo => ({
     payload: { todo }
 });
 
-export const TODO_COMPLETED = 'TODO_COMPLETED';
-export const completedTodo = isCompleted => ({
-    type: TODO_COMPLETED,
-    payload: { isCompleted }
+export const MARK_TODO_AS_COMPLETED = 'MARK_TODO_AS_COMPLETED';
+export const markTodoAsCompleted = todo => ({
+    type: MARK_TODO_AS_COMPLETED,
+    payload: { todo }
 });
 
 export const REMOVE_TODO = 'REMOVE_TODO';

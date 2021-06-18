@@ -1,6 +1,6 @@
 import {
     CREATE_TODO,
-    TODO_COMPLETED,
+    MARK_TODO_AS_COMPLETED,
     REMOVE_TODO,
     LOAD_TODOS_IN_PROGRESS,
     LOAD_TODOS_SUCCESS,
@@ -30,8 +30,15 @@ export const todos = (state = [], action) => {
             return state.concat(todo);
         }
 
-        case TODO_COMPLETED: {
-            return [...state]
+        case MARK_TODO_AS_COMPLETED: {
+            const { todo: updatedTodo } = payload;
+
+            return state.map(todo => {
+                if (todo.id === updatedTodo.id) {
+                    return updatedTodo;
+                }
+                return todo;
+            })
         }
 
         case REMOVE_TODO: {
