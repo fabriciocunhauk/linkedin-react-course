@@ -2,11 +2,29 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import TodoListItem from './TodoListItem';
 import NewTodoForm from './NewTodoForm';
-import { loadTodos, removeTodoRequest, markTodoAsCompletedRequest } from './thunks';
+import {
+    getTodos,
+    getTodosLoading,
+    getCompletedTodos,
+    getIncompleteTodos
+} from './selectors';
+
+import {
+    loadTodos,
+    removeTodoRequest,
+    markTodoAsCompletedRequest
+} from './thunks';
 
 import './TodoList.css';
 
-const TodoList = ({ todos = [], onRemovePressed, onCompletedPressed, isLoading, startLoadTodos }) => {
+const TodoList = ({
+    completedTodos,
+    incompletedTodos,
+    onRemovePressed,
+    onCompletedPressed,
+    isLoading,
+    startLoadTodos }) => {
+
     useEffect(() => {
         startLoadTodos();
     }, []);
@@ -16,7 +34,15 @@ const TodoList = ({ todos = [], onRemovePressed, onCompletedPressed, isLoading, 
     const content = (
         <div className="list-wrapper">
             <NewTodoForm />
-            {todos.map((todo, index) => <TodoListItem
+            <h3>Incomplete:</h3>
+            {incompletedTodos.map((todo, index) => <TodoListItem
+                key={index}
+                todo={todo}
+                onRemovePressed={onRemovePressed}
+                onCompletedPressed={onCompletedPressed}
+            />)}
+            <h3>Completed:</h3>
+            {completedTodos.map((todo, index) => <TodoListItem
                 key={index}
                 todo={todo}
                 onRemovePressed={onRemovePressed}
@@ -29,13 +55,14 @@ const TodoList = ({ todos = [], onRemovePressed, onCompletedPressed, isLoading, 
 }
 
 const mapStateToProps = state => ({
-    isLoading: state.isLoading,
-    todos: state.todos,
+    isLoading: getTodosLoading(state),
+    completedTodos: getCompletedTodos(state),
+    incompletedTodos: getIncompleteTodos(state),
 })
 
 const mapDispatchToProps = dispatch => ({
     onRemovePressed: id => dispatch(removeTodoRequest(id)),
-    onCompletedPressed: id => dispatch(markTodoAsCompletedRequest(id)),
+    onCompletedPressed: (id, isCompleted) => dispatch(markTodoAsCompletedRequest(id, isCompleted)),
     startLoadTodos: () => dispatch(loadTodos()),
 })
 
